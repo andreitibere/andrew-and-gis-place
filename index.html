@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Andrew &amp; Gi's Place — Brisbane</title>
+<meta name="description" content="A very exclusive sleepover. One sofa-bed, two hosts, your last stop before Bali." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* =========================================================
+     CONFIG (name + dates) is in the <script> at the bottom.
+     Change the accent in one place: --pop
+     ========================================================= */
+  :root{
+    --bg:#f3f3ed;
+    --ink:#17181c;
+    --ink-soft:#6d6e74;
+    --pop:#2d4bff;          /* the single accent — swap freely */
+    --pop-soft:#9fb0ff;
+    --card:#ffffff;
+    --line:rgba(23,24,28,.14);
+    --line-bold:#17181c;
+    --disp:'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;color:var(--ink);font-family:var(--sans);line-height:1.55;
+    background-color:var(--bg);
+    background-image:radial-gradient(rgba(23,24,28,.055) 1px, transparent 1px);
+    background-size:24px 24px;background-attachment:fixed;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  ::selection{background:var(--pop);color:#fff;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 26px;}
+
+  .chip{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;
+    letter-spacing:.04em;border:1.5px solid var(--line-bold);border-radius:100px;padding:7px 15px;
+    background:var(--card);}
+  .chip .dot{width:8px;height:8px;border-radius:50%;background:var(--pop);
+    box-shadow:0 0 0 0 rgba(45,75,255,.5);animation:pulse 2.2s infinite;}
+  @keyframes pulse{70%{box-shadow:0 0 0 8px rgba(45,75,255,0);}100%{box-shadow:0 0 0 0 rgba(45,75,255,0);}}
+
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--pop);}
+
+  /* ---------------- HERO ---------------- */
+  .hero{min-height:90svh;display:flex;flex-direction:column;justify-content:center;position:relative;
+    padding:96px 0 56px;}
+  .hero .eyebrow{margin-bottom:20px;display:block;}
+  .hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(40px,7vw,82px);line-height:.98;
+    letter-spacing:-.03em;margin:0;}
+  .hero h1 .amp{color:var(--pop);}
+  .hero h1 .line{display:block;overflow:hidden;}
+  .hero h1 .line span{display:block;transform:translateY(105%);}
+  .hero .sub{font-size:clamp(17px,2.1vw,21px);color:var(--ink-soft);max-width:30ch;margin:24px 0 0;
+    font-weight:400;}
+  .hero .sub b{color:var(--ink);font-weight:600;}
+  .meta{margin-top:34px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .stay{display:none;font-size:13.5px;color:var(--ink-soft);font-weight:500;}
+  .stay b{color:var(--ink);}
+  .stay .sep{margin:0 9px;color:var(--pop);font-weight:700;}
+
+  /* tilted sticker */
+  .sticker{position:absolute;top:84px;right:8px;background:var(--pop);color:#fff;font-family:var(--disp);
+    font-weight:700;font-size:13px;letter-spacing:.04em;padding:14px 16px;border-radius:50%;
+    width:104px;height:104px;display:flex;align-items:center;justify-content:center;text-align:center;
+    line-height:1.15;transform:rotate(-11deg);box-shadow:0 8px 0 rgba(45,75,255,.25);
+    animation:bob 3.4s ease-in-out infinite;}
+  @keyframes bob{50%{transform:rotate(-11deg) translateY(-8px);}}
+
+  .scrollcue{position:absolute;bottom:26px;left:0;font-size:11px;font-weight:600;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-soft);text-decoration:none;display:inline-flex;align-items:center;gap:9px;}
+  .scrollcue .a{width:22px;height:22px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;}
+  .scrollcue .a::after{content:"↓";animation:nudge 1.6s ease-in-out infinite;}
+  @keyframes nudge{50%{transform:translateY(3px);}}
+
+  /* ---------------- MARQUEE ---------------- */
+  .marquee{background:var(--ink);color:var(--bg);overflow:hidden;white-space:nowrap;
+    transform:rotate(-1.2deg) scale(1.04);margin:10px 0;}
+  .marquee .track{display:inline-flex;gap:0;animation:scroll 22s linear infinite;will-change:transform;}
+  .marquee span{font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.05em;padding:13px 0;}
+  .marquee b{color:var(--pop);margin:0 22px;font-weight:700;}
+  @keyframes scroll{to{transform:translateX(-50%);}}
+
+  /* ---------------- SECTIONS ---------------- */
+  section{padding:clamp(64px,10vh,104px) 0;}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+
+  .suite{display:grid;grid-template-columns:1fr .82fr;gap:48px;align-items:center;}
+  .suite h2{font-family:var(--disp);font-weight:700;font-size:clamp(28px,4.4vw,48px);line-height:1.02;
+    letter-spacing:-.02em;margin:14px 0 0;}
+  .suite h2 .u{color:var(--pop);}
+  .suite p{color:var(--ink-soft);font-size:16.5px;max-width:42ch;margin:18px 0 0;}
+  .suite .tag{margin-top:22px;display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:13.5px;
+    background:var(--card);border:1.5px solid var(--line-bold);border-radius:100px;padding:8px 14px;}
+  .suite .tag b{color:var(--pop);}
+
+  .card{position:relative;border:2px solid var(--line-bold);border-radius:22px;background:var(--card);
+    aspect-ratio:1/1;display:grid;place-items:center;overflow:hidden;
+    box-shadow:8px 8px 0 var(--ink);transition:transform .2s ease;}
+  .card .emoji{font-size:84px;line-height:1;filter:saturate(1.05);transition:transform .25s ease;}
+  .card:hover .emoji{transform:scale(1.08) rotate(-4deg);}
+  .card .no{position:absolute;top:14px;left:16px;font-family:var(--disp);font-weight:700;font-size:13px;
+    color:var(--ink);letter-spacing:.04em;}
+  .card .badge{position:absolute;bottom:-1px;right:-1px;background:var(--pop);color:#fff;font-family:var(--disp);
+    font-weight:700;font-size:12px;letter-spacing:.05em;padding:9px 14px;border-radius:14px 0 18px 0;}
+
+  /* house notes */
+  .notes{margin-top:84px;}
+  .notes .head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:26px;flex-wrap:wrap;}
+  .notes h2{font-family:var(--disp);font-weight:700;font-size:clamp(24px,3.6vw,36px);margin:0;letter-spacing:-.02em;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+  .note{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:20px 20px 18px;
+    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;}
+  .note:hover{transform:translateY(-4px);border-color:var(--line-bold);box-shadow:5px 5px 0 var(--ink);}
+  .note .e{font-size:26px;line-height:1;}
+  .note h3{font-family:var(--disp);font-weight:600;font-size:17px;margin:13px 0 3px;}
+  .note p{font-size:13.5px;color:var(--ink-soft);margin:0;}
+
+  /* ---------------- RSVP ---------------- */
+  .rsvp{text-align:center;}
+  .rsvp h2{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5vw,56px);margin:14px 0 0;
+    letter-spacing:-.025em;line-height:1;}
+  .rsvp h2 .u{color:var(--pop);}
+  .panel{max-width:480px;margin:38px auto 0;background:var(--card);border:2px solid var(--line-bold);
+    border-radius:22px;padding:30px 26px 26px;text-align:left;box-shadow:8px 8px 0 var(--ink);}
+  .fld{margin-bottom:18px;}
+  .fld label{display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:8px;}
+  .fld input[type=text]{width:100%;border:1.5px solid var(--line);border-radius:11px;background:var(--bg);
+    font-family:var(--disp);font-weight:500;font-size:18px;color:var(--ink);padding:12px 13px;transition:border-color .2s;}
+  .fld input::placeholder{color:#b7b8bd;font-weight:400;}
+  .fld input:focus{outline:none;border-color:var(--pop);}
+  .seg{display:flex;gap:9px;}
+  .seg button{flex:1;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;
+    border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:11px;padding:11px 8px;
+    transition:all .15s cubic-bezier(.34,1.4,.64,1);}
+  .seg button:hover{border-color:var(--ink);}
+  .seg button.on{background:var(--pop);border-color:var(--pop);color:#fff;transform:translateY(-2px);
+    box-shadow:0 5px 0 rgba(45,75,255,.35);}
+
+  .btnrow{margin-top:24px;text-align:center;}
+  .mag{position:relative;border:none;cursor:pointer;background:var(--ink);color:var(--bg);font-family:var(--disp);
+    font-weight:700;font-size:16px;letter-spacing:.01em;padding:16px 34px;border-radius:100px;
+    transition:transform .14s ease, background .2s;will-change:transform;}
+  .mag:hover{background:var(--pop);}
+  .mag .lbl{display:inline-block;transition:transform .14s ease;}
+
+  /* ---------------- CONFIRM POPUP ---------------- */
+  .overlay{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
+    background:rgba(23,24,28,.45);backdrop-filter:blur(7px);padding:22px;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--card);border:2px solid var(--line-bold);border-radius:24px;max-width:420px;width:100%;
+    padding:38px 30px 30px;text-align:center;box-shadow:10px 10px 0 var(--ink);
+    transform:translateY(16px) scale(.95);opacity:0;transition:transform .45s cubic-bezier(.34,1.56,.64,1),opacity .3s;}
+  .overlay.show .modal{transform:none;opacity:1;}
+  .seal{width:96px;height:96px;margin:0 auto 16px;border-radius:50%;background:var(--pop);color:#fff;
+    display:grid;place-items:center;font-family:var(--disp);font-weight:700;transform:scale(0) rotate(-25deg);
+    box-shadow:0 8px 0 rgba(45,75,255,.3);}
+  .overlay.show .seal{animation:pop .6s cubic-bezier(.34,1.7,.5,1) .15s forwards;}
+  .seal svg{width:46px;height:46px;}
+  @keyframes pop{0%{transform:scale(0) rotate(-25deg);}65%{transform:scale(1.16) rotate(6deg);}100%{transform:scale(1) rotate(-6deg);}}
+  .modal h3{font-family:var(--disp);font-weight:700;font-size:27px;margin:4px 0 8px;letter-spacing:-.02em;}
+  .modal h3 .u{color:var(--pop);}
+  .modal p{color:var(--ink-soft);font-size:15px;margin:0 auto 22px;max-width:32ch;}
+  .modal .done{width:100%;border:none;cursor:pointer;background:var(--ink);color:var(--bg);font-family:var(--disp);
+    font-weight:700;font-size:15px;padding:14px;border-radius:100px;transition:background .2s;}
+  .modal .done:hover{background:var(--pop);}
+  #confetti{position:fixed;inset:0;z-index:49;pointer-events:none;display:none;}
+  #confetti.show{display:block;}
+
+  /* ---------------- STATS ---------------- */
+  .stats{padding:26px 0;border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line);}
+  .stats .row{display:flex;flex-wrap:wrap;gap:18px 10px;justify-content:space-between;align-items:flex-start;}
+  .stat{flex:1 1 90px;text-align:center;}
+  .stat .n{font-family:var(--disp);font-weight:700;font-size:clamp(30px,4.6vw,48px);line-height:1;letter-spacing:-.02em;}
+  .stat .n .pop{color:var(--pop);}
+  .stat .l{font-size:12.5px;color:var(--ink-soft);font-weight:500;margin-top:6px;}
+
+  /* ---------------- TIMELINE ---------------- */
+  .plan-h2{font-family:var(--disp);font-weight:700;font-size:clamp(28px,4.4vw,48px);letter-spacing:-.02em;margin:12px 0 0;}
+  .plan-h2 .u{color:var(--pop);}
+  .timeline{position:relative;margin-top:34px;}
+  .timeline .line{position:absolute;left:21px;top:10px;width:2px;height:calc(100% - 20px);
+    background:var(--line-bold);transform:scaleY(0);transform-origin:top;transition:transform .9s cubic-bezier(.4,0,.2,1) .1s;}
+  .timeline.drawn .line{transform:scaleY(1);}
+  .step{position:relative;padding:0 0 28px 62px;}
+  .step:last-child{padding-bottom:0;}
+  .step .node{position:absolute;left:0;top:-2px;width:44px;height:44px;border-radius:50%;background:var(--card);
+    border:2px solid var(--line-bold);display:grid;place-items:center;font-size:21px;
+    box-shadow:4px 4px 0 var(--ink);z-index:1;}
+  .step .when{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--pop);}
+  .step h3{font-family:var(--disp);font-weight:600;font-size:19px;margin:3px 0 5px;}
+  .step p{font-size:14.5px;color:var(--ink-soft);margin:0;max-width:48ch;}
+
+  footer{text-align:center;padding:46px 24px 56px;color:var(--ink-soft);font-size:12.5px;}
+  footer .big{font-family:var(--disp);font-weight:600;color:var(--ink);font-size:15px;margin-bottom:8px;}
+
+  @media (max-width:720px){
+    .wrap{padding:0 20px;}
+    .hero{min-height:86svh;padding:80px 0 60px;}
+    .hero .sub{max-width:26ch;}
+    .suite{grid-template-columns:1fr;gap:26px;}
+    .card{max-width:280px;width:100%;margin:0 auto;}
+    .sticker{top:14px;right:12px;bottom:auto;left:auto;width:74px;height:74px;font-size:11px;
+      box-shadow:0 6px 0 rgba(45,75,255,.25);}
+    .marquee span{font-size:13px;}
+    .stats{padding:22px 0;}
+    .stats .row{justify-content:center;gap:18px 6px;}
+    .stat{flex:0 0 30%;}
+    .notes{margin-top:58px;}
+    .notes .head{margin-bottom:20px;}
+    .step{padding:0 0 26px 56px;}
+    .step p{font-size:14px;}
+    .panel{box-shadow:6px 6px 0 var(--ink);}
+  }
+  @media (max-width:430px){
+    .hero h1{font-size:39px;}
+    .stat{flex:0 0 45%;}
+    .stat .l{font-size:11.5px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important;}
+    .reveal{opacity:1;transform:none;}
+    .hero h1 .line span{transform:none;}
+    .marquee{transform:rotate(-1.2deg);}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="wrap" id="heroWrap">
+      <span class="eyebrow">Brisbane · by invitation (sort of)</span>
+      <h1>
+        <span class="line"><span>Andrew</span></span>
+        <span class="line"><span><span class="amp">&amp;</span> Gi's Place</span></span>
+      </h1>
+      <p class="sub">A very exclusive sleepover. <b>One sofa-bed</b>, two hosts, and your last stop before Bali. ✈️</p>
+      <div class="meta">
+        <span class="chip"><span class="dot"></span>Reserved for <b id="guestLabel" style="margin-left:4px">Paula</b></span>
+        <span class="stay" id="stay"></span>
+      </div>
+    </div>
+    <div class="sticker">GUEST<br>no.001</div>
+    <a class="scrollcue wrap" href="#suite" style="position:absolute;bottom:26px;"><span class="a"></span><span>The details</span></a>
+  </header>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="track" id="track">
+      <span>ANDREW &amp; GI'S PLACE<b>✦</b>ONE SOFA-BED<b>✦</b>TWO HOSTS<b>✦</b>LAST STOP BEFORE BALI<b>✦</b>FIRST GUESTS EVER<b>✦</b></span>
+      <span>ANDREW &amp; GI'S PLACE<b>✦</b>ONE SOFA-BED<b>✦</b>TWO HOSTS<b>✦</b>LAST STOP BEFORE BALI<b>✦</b>FIRST GUESTS EVER<b>✦</b></span>
+    </div>
+  </div>
+
+  <!-- ============ STATS ============ -->
+  <div class="stats">
+    <div class="wrap">
+      <div class="row reveal">
+        <div class="stat"><div class="n"><span data-count="1">0</span></div><div class="l">sofa-bed</div></div>
+        <div class="stat"><div class="n"><span data-count="2">0</span></div><div class="l">excited hosts</div></div>
+        <div class="stat"><div class="n"><span data-count="1">0</span></div><div class="l">dinner out 🍽️</div></div>
+        <div class="stat"><div class="n"><span class="pop">∞</span></div><div class="l">snacks</div></div>
+        <div class="stat"><div class="n"><span data-count="0">0</span></div><div class="l">hotel bills</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ THE SUITE ============ -->
+  <section id="suite">
+    <div class="wrap">
+      <div class="suite">
+        <div class="reveal">
+          <span class="eyebrow">The accommodation</span>
+          <h2>The one &amp; only <span class="u">sofa-bed</span></h2>
+          <p>Freshly bought, never slept on. As of your visit — congratulations — you're officially the very first humans to test it. No pressure.</p>
+          <span class="tag">🛋️ Founding guests · <b>no.&nbsp;001</b></span>
+        </div>
+        <div class="reveal" style="transition-delay:.08s">
+          <div class="card" id="tiltCard">
+            <span class="no">no.001</span>
+            <span class="emoji">🛋️</span>
+            <span class="badge">Never slept on</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- house notes -->
+      <div class="notes reveal">
+        <div class="head">
+          <h2>House notes</h2>
+          <span class="eyebrow">read before sleeping</span>
+        </div>
+        <div class="grid">
+          <div class="note"><div class="e">🍫</div><h3>Bring snacks</h3><p>Non-negotiable. To share, ideally.</p></div>
+          <div class="note"><div class="e">🔐</div><h3>Wi-Fi is sacred</h3><p>Password on a need-to-know basis.</p></div>
+          <div class="note"><div class="e">😴</div><h3>Quiet once we crash</h3><p>The hosts need beauty sleep.</p></div>
+          <div class="note"><div class="e">🧲</div><h3>Souvenir tax</h3><p>One Bali magnet, minimum.</p></div>
+          <div class="note"><div class="e">🌙</div><h3>No midnight fridge raids</h3><p>Between 12 and 6, please.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE PLAN ============ -->
+  <section id="plan">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">the plan</span>
+        <h2 class="plan-h2">How it'll <span class="u">go</span></h2>
+      </div>
+      <div class="timeline">
+        <div class="line"></div>
+        <div class="step reveal">
+          <div class="node">🍽️</div>
+          <div class="when">Thursday night</div>
+          <h3>Arrive &amp; dinner out</h3>
+          <p>Drop your bags, then we head out somewhere good for dinner. Our shout… probably. Bring your appetite.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:.08s">
+          <div class="node">🛋️</div>
+          <div class="when">Later that night</div>
+          <h3>Break in the sofa-bed</h3>
+          <p>Back home for the inaugural sleepover. You're making history — the famous sofa-bed's very first guests.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:.16s">
+          <div class="node">✈️</div>
+          <div class="when">Friday morning</div>
+          <h3>Off to Bali</h3>
+          <p>Coffee, quick goodbyes, and you're wheels-up. Don't forget the souvenir tax: one magnet, minimum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RSVP ============ -->
+  <section class="rsvp" id="rsvp">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">last thing, promise</span>
+        <h2>Confirm your <span class="u">stay</span></h2>
+      </div>
+      <div class="panel reveal" style="transition-delay:.06s">
+        <div class="fld">
+          <label>Your name</label>
+          <input type="text" id="rName" placeholder="Type your name…" autocomplete="off" />
+        </div>
+        <div class="fld">
+          <label>Snacks situation?</label>
+          <div class="seg" data-seg="snacks">
+            <button type="button" data-val="Bringing some">Bringing some</button>
+            <button type="button" data-val="A whole feast">A whole feast</button>
+          </div>
+        </div>
+        <div class="fld" style="margin-bottom:0">
+          <label>Souvenir from Bali?</label>
+          <div class="seg" data-seg="souvenir">
+            <button type="button" data-val="Promise">Promise 🤞</button>
+            <button type="button" data-val="No promises">No promises</button>
+          </div>
+        </div>
+        <div class="btnrow">
+          <button class="mag" id="confirmBtn"><span class="lbl">Confirm my stay →</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="big">See you soon ✨</div>
+    Made with love (and zero actual bureaucracy). One sofa-bed, two very excited hosts.<br>
+    Andrew &amp; Gi's Place · Brisbane
+  </footer>
+
+  <!-- ============ CONFIRM POPUP ============ -->
+  <canvas id="confetti"></canvas>
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <div class="seal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <h3>You're in, <span class="u" id="modalName">friend</span>!</h3>
+      <p>Beleza — we've let your hosts know you're coming. The sofa-bed is being fluffed as we speak. 🛋️</p>
+      <button class="done" id="doneBtn">Done</button>
+    </div>
+  </div>
+
+<script>
+/* =================================================================
+   ⚙️  CONFIG — edit to personalise
+   ================================================================= */
+const CONFIG = {
+  guestFirstName: "Paula",
+  checkIn:  "Thu 11 Jun",   // leave "" to hide
+  checkOut: "Fri 12 Jun"
+};
+document.getElementById('guestLabel').textContent = CONFIG.guestFirstName;
+if (CONFIG.checkIn || CONFIG.checkOut){
+  const s = document.getElementById('stay');
+  s.style.display = 'inline';
+  s.innerHTML = 'Check-in <b>' + (CONFIG.checkIn||'TBC') + '</b><span class="sep">·</span>Bali <b>' + (CONFIG.checkOut||'TBC') + '</b>';
+}
+
+/* ---- hero reveal (robust + idempotent) ---- */
+function revealHero(){
+  document.querySelectorAll('.hero h1 .line span').forEach((s,i)=>{
+    s.style.transition = 'transform .9s cubic-bezier(.2,.85,.2,1) ' + (.1 + i*.1) + 's';
+    requestAnimationFrame(()=> s.style.transform = 'translateY(0)');
+  });
+}
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(revealHero);
+window.addEventListener('load', revealHero);
+setTimeout(revealHero, 1400);
+
+/* ---- count-up for stats ---- */
+function countUp(el){
+  const target = +el.dataset.count || 0, dur = 950; let start = null;
+  function tick(ts){
+    if(start===null) start=ts;
+    const p = Math.min((ts-start)/dur, 1);
+    el.textContent = Math.round((1 - Math.pow(1-p,3)) * target);
+    if(p<1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  setTimeout(function(){ el.textContent = target; }, dur + 150); // guarantee correct final number even if rAF is throttled
+}
+
+/* ---- scroll reveals (manual & robust: works everywhere, never leaves content hidden) ---- */
+const reveals = [...document.querySelectorAll('.reveal')];
+const tline = document.querySelector('.timeline');
+function checkReveal(){
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  reveals.forEach(el=>{
+    if(el.classList.contains('in')) return;
+    if(el.getBoundingClientRect().top < vh*0.9){
+      el.classList.add('in');
+      el.querySelectorAll('[data-count]').forEach(countUp);
+    }
+  });
+  if(tline && !tline.classList.contains('drawn') && tline.getBoundingClientRect().top < vh*0.82){
+    tline.classList.add('drawn');
+  }
+}
+window.addEventListener('scroll', checkReveal, {passive:true});
+window.addEventListener('resize', checkReveal);
+window.addEventListener('load', checkReveal);
+checkReveal();
+/* safety net: if anything is still hidden a few seconds in, show it no matter what */
+setTimeout(()=>{ reveals.forEach(el=>{ if(!el.classList.contains('in')){ el.classList.add('in'); el.querySelectorAll('[data-count]').forEach(countUp);} }); if(tline) tline.classList.add('drawn'); }, 6000);
+
+/* ---- subtle 3D tilt on the card ---- */
+const card = document.getElementById('tiltCard');
+card.addEventListener('pointermove', e=>{
+  const r = card.getBoundingClientRect();
+  const x = (e.clientX-r.left)/r.width - .5, y = (e.clientY-r.top)/r.height - .5;
+  card.style.transform = `perspective(800px) rotateY(${x*9}deg) rotateX(${-y*9}deg)`;
+});
+card.addEventListener('pointerleave', ()=> card.style.transform='');
+
+/* ---- segmented pickers ---- */
+const picks = {};
+document.querySelectorAll('.seg').forEach(seg=>{
+  seg.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on'); picks[seg.dataset.seg]=b.dataset.val;
+    });
+  });
+});
+
+/* ---- magnetic buttons ---- */
+document.querySelectorAll('.mag').forEach(btn=>{
+  const lbl=btn.querySelector('.lbl');
+  btn.addEventListener('pointermove', e=>{
+    const r=btn.getBoundingClientRect();
+    const x=(e.clientX-r.left-r.width/2)*.25, y=(e.clientY-r.top-r.height/2)*.35;
+    btn.style.transform=`translate(${x}px,${y}px)`; if(lbl) lbl.style.transform=`translate(${x*.4}px,${y*.4}px)`;
+  });
+  btn.addEventListener('pointerleave', ()=>{ btn.style.transform=''; if(lbl) lbl.style.transform=''; });
+});
+
+/* ---- confetti (black / white / pop + a dash of joy) ---- */
+const cv=document.getElementById('confetti'), cx=cv.getContext('2d');
+function sizeCanvas(){ cv.width=innerWidth; cv.height=innerHeight; }
+sizeCanvas(); addEventListener('resize', sizeCanvas);
+const COLORS=['#2d4bff','#17181c','#2d4bff','#ffd23e','#ffffff','#9fb0ff'];
+function fireConfetti(){
+  cv.classList.add('show');
+  const parts=[];
+  for(let i=0;i<140;i++){
+    const a=Math.random()*Math.PI*2, sp=4+Math.random()*9;
+    parts.push({x:innerWidth/2,y:innerHeight*0.4,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-4,
+      g:0.2+Math.random()*0.12,r:5+Math.random()*6,rot:Math.random()*6.28,vr:(Math.random()-.5)*.45,
+      c:COLORS[i%COLORS.length],life:0,max:80+Math.random()*40});
+  }
+  let t=0;
+  (function anim(){
+    cx.clearRect(0,0,cv.width,cv.height); let alive=false;
+    parts.forEach(p=>{ if(p.life>p.max) return; alive=true;
+      p.life++; p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr;
+      cx.save(); cx.translate(p.x,p.y); cx.rotate(p.rot);
+      cx.globalAlpha=Math.max(0,1-p.life/p.max); cx.fillStyle=p.c;
+      cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.62); cx.restore();
+    });
+    if(alive && ++t<200) requestAnimationFrame(anim);
+    else { cx.clearRect(0,0,cv.width,cv.height); cv.classList.remove('show'); }
+  })();
+}
+
+/* ---- confirm flow (no email, just a delightful popup) ---- */
+const overlay=document.getElementById('overlay');
+document.getElementById('confirmBtn').addEventListener('click', ()=>{
+  const name=document.getElementById('rName').value.trim();
+  document.getElementById('modalName').textContent = name || CONFIG.guestFirstName;
+  overlay.classList.add('show');
+  setTimeout(fireConfetti, 350);
+});
+function closeModal(){ overlay.classList.remove('show'); }
+document.getElementById('doneBtn').addEventListener('click', closeModal);
+overlay.addEventListener('click', e=>{ if(e.target===overlay) closeModal(); });
+</script>
+</body>
+</html>
